@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,22 +31,20 @@ public class EducacionController {
     }
     
     @DeleteMapping("educacion/borrar/{id}")
-    public String deleteItemEduc(@PathVariable Long id){
+    public void deleteItemEduc(@PathVariable Long id){
         edServ.deleteItemEduc(id);
-        return "";//"Item de educación borrado correctamente";
+        //return "";//"Item de educación borrado correctamente";
     }
     
     @PutMapping("educacion/editar/{id}")
     public Educacion editItemEduc(@PathVariable Long id,
-                                  @RequestParam("titulo") String nuevoTit,
-                                  @RequestParam("institucion") String nuevaInst,
-                                  @RequestParam("completo") boolean nuevoBool){
+                                  @RequestBody Educacion edu){
         
         Educacion educ = edServ.findItemEduc(id);
-        educ.setTitulo(nuevoTit);
-        educ.setInstitucion(nuevaInst);
-        educ.setCompleto(nuevoBool);
-        //educ.isCompleto();
+        educ.setTitulo(edu.getTitulo());
+        educ.setInstitucion(edu.getInstitucion());
+        educ.setCompleto(edu.isCompleto());
+        
         edServ.saveItemEduc(educ);
         return educ;
     }

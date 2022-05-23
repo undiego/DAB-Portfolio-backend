@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,22 +32,19 @@ public class Controller {
     };
     
     @DeleteMapping("items/borrar/{id}")
-    public String deleteItem(@PathVariable Long id){
+    public void deleteItem(@PathVariable Long id){
         interItem.deleteItem(id);
-        return ""; //Ítem borrado";
+        //return ""; //Ítem borrado";
     };
     
     @PutMapping("/items/editar/{id}")
     public Item editItem(@PathVariable Long id,
-                         @RequestParam ("title") String nuevoTitle,
-                         @RequestParam("text") String nuevoText,
-                         @RequestParam("url") String nuevoUrl
-                        ){
+                         @RequestBody Item itm){
         Item it = interItem.findItem(id);
         
-        it.setTitle(nuevoTitle);
-        it.setText(nuevoText);
-        it.setUrl(nuevoUrl);
+        it.setTitle(itm.getTitle());
+        it.setText(itm.getText());
+        it.setUrl(itm.getUrl());
         
         interItem.saveItem(it);
         return it;

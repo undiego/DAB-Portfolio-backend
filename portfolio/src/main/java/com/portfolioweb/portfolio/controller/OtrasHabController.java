@@ -31,19 +31,18 @@ public class OtrasHabController {
     }
     
     @DeleteMapping("otrashabilidades/borrar/{id}")
-    public String deleteOtrasHab(@PathVariable Long id){
+    public void deleteOtrasHab(@PathVariable Long id){
         ohServ.deleteOtrasHab(id);
-        return ""; //Ítem de otras habilidades borrado correctamente";
+        //return ""; //Ítem de otras habilidades borrado correctamente";
     }
     
     @PutMapping("otrashabilidades/editar/{id}")
     public OtrasHab editOtrasHab(@PathVariable Long id,
-                                  @RequestParam("text") String nuevoText,
-                                  @RequestParam ("url") String nuevaUrl){
+                                  @RequestBody OtrasHab oth){
     
         OtrasHab otrhab = ohServ.findOtrasHab(id);
-        otrhab.setText(nuevoText);
-        otrhab.setUrl(nuevaUrl);
+        otrhab.setText(oth.getText());
+        otrhab.setUrl(oth.getUrl());
         
         ohServ.saveOtrasHab(otrhab);
         return otrhab;

@@ -32,21 +32,19 @@ public class ExperLabController {
     }
     
     @DeleteMapping("experiencialaboral/borrar/{id}")
-    public String deleteExperLab(@PathVariable Long id){
+    public void deleteExperLab(@PathVariable Long id){
         elServ.deleteExperLab(id);
-        return ""; //Ítem de experiencia laboral borrado correctamente";
+        //return ""; //Ítem de experiencia laboral borrado correctamente";
     }
     
     @PutMapping("experiencialaboral/editar/{id}")
     public ExperLab editExperLab(@PathVariable Long id, 
-                                 @RequestParam("institucion") String nuevaInst,
-                                 @RequestParam("area") String nuevaArea,
-                                 @RequestParam("duracion") int nuevaDur){
+                                 @RequestBody ExperLab exp){
         
         ExperLab expl = elServ.findExperLab(id);
-        expl.setInstitucion(nuevaInst);
-        expl.setArea(nuevaArea);
-        expl.setDuracion(nuevaDur);
+        expl.setInstitucion(exp.getInstitucion());
+        expl.setArea(exp.getArea());
+        expl.setDuracion(exp.getDuracion());
         
         elServ.saveExperLab(expl);
         return expl;

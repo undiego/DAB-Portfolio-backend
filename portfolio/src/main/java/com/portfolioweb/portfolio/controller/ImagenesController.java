@@ -31,19 +31,18 @@ public class ImagenesController {
     }
     
     @DeleteMapping("imagenes/borrar/{id}")
-    public String deleteImagenes(@PathVariable Long id){
+    public void deleteImagenes(@PathVariable Long id){
         imgServ.deleteImagenes(id);
-        return "Ítem de imagenes borrado correctamente";
+        //return "Ítem de imagenes borrado correctamente";
     }
     
     @PutMapping("imagenes/editar/{id}")
     public Imagenes editImagenes(@PathVariable Long id,
-                                  @RequestParam("nombre") String nuevoNombre,
-                                  @RequestParam ("url") String nuevaUrl){
+                                  @RequestBody Imagenes im){
     
         Imagenes img = imgServ.findImagenes(id);
-        img.setNombre(nuevoNombre);
-        img.setUrl(nuevaUrl);
+        img.setNombre(im.getNombre());
+        img.setUrl(im.getUrl());
         
         imgServ.saveImagenes(img);
         return img;

@@ -31,17 +31,16 @@ public class ControllerConocInform {
     };
     
     @DeleteMapping("conocimientosinformaticos/borrar/{id}")
-    public String deleteConocInform(@PathVariable Long id){
+    public void deleteConocInform(@PathVariable Long id){
         ciServ.deleteConocInform(id);
-        return ""; // "Ítem de conocimiento informático borrado correctamente";
+        //return ""; // "Ítem de conocimiento informático borrado correctamente";
     };
     
     @PutMapping("conocimientosinformaticos/editar/{id}")
     public ConocInform editConocInform(@PathVariable Long id,
-                                       @RequestParam ("item") String nuevoItem
-                                        ){
+                                       @RequestBody ConocInform con){
         ConocInform ci = ciServ.findConocInform(id);
-        ci.setItem(nuevoItem);
+        ci.setItem(con.getItem());
         
         ciServ.saveConocInform(ci);
         return ci;        
